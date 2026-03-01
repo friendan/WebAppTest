@@ -251,7 +251,7 @@ if(WOLFSSL_REPRODUCIBLE_BUILD)
     set(CMAKE_C_ARCHIVE_FINISH "<CMAKE_RANLIB> -D <TARGET>")
 endif()
 
-add_option("WOLFSSL_INSTALL" "Create install target for WolfSSL project" "yes" "yes;no")
+add_option("WOLFSSL_INSTALL" "Create install target for WolfSSL project" "no" "yes;no")
 
 # Support for forcing 32-bit mode
 # TODO: detect platform from other options
@@ -1064,7 +1064,7 @@ endif()
 set(WOLFSSL_CURVE25519_SMALL "no")
 add_option("WOLFSSL_CURVE25519"
     "Enable Curve25519 (default: disabled)"
-    "no" "yes;no;small;no128bit")
+    "yes" "yes;no;small;no128bit")
 
 if(WOLFSSL_OPENSSH)
     override_cache(WOLFSSL_CURVE25519 "yes")
@@ -1434,7 +1434,7 @@ endif()
 
 # MD5
 set(WOLFSSL_MD5_HELP_STRING "Enable MD5 (default: disabled)")
-add_option("WOLFSSL_MD5" ${WOLFSSL_MD5_HELP_STRING} "no" "yes;no")
+add_option("WOLFSSL_MD5" ${WOLFSSL_MD5_HELP_STRING} "yes" "yes;no")
 
 if(WOLFSSL_WPAS OR
    WOLFSSL_HAPROXY OR
@@ -1931,7 +1931,7 @@ add_option("WOLFSSL_SP_MATH_ALL"
 if(WOLFSSL_LINUX_KM)
     set(EXAMPLES_DEFAULT "no")
 else()
-    set(EXAMPLES_DEFAULT "yes")
+    set(EXAMPLES_DEFAULT "no")
 endif()
 
 add_option("WOLFSSL_EXAMPLES"
@@ -1948,7 +1948,7 @@ endif()
 if(WOLFSSL_LINUX_KM)
     set(CRYPT_TESTS_DEFAULT "no")
 else()
-    set(CRYPT_TESTS_DEFAULT "yes")
+    set(CRYPT_TESTS_DEFAULT "no")
 endif()
 
 add_option("WOLFSSL_CRYPT_TESTS"
@@ -2428,7 +2428,7 @@ file(REMOVE ${OPTION_FILE})
 
 # TODO: - Build shared/static libs based on enables. Check CMake
 #         global flag BUILD_SHARED_LIBS.
-option(BUILD_SHARED_LIBS "Build shared libraries (.dll/.so) instead of static ones (.lib/.a)" ON)
+option(BUILD_SHARED_LIBS "Build shared libraries (.dll/.so) instead of static ones (.lib/.a)" OFF)
 
 set(LIB_SOURCES "")
 # Generates a list of sources to include in the library.
