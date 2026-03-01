@@ -268,7 +268,7 @@ if(BUILD_STATIC)
         INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
     target_link_libraries(hv_static ${LIBS})
     #install(TARGETS hv_static EXPORT libhvConfig ARCHIVE DESTINATION lib)
-    add_custom_target(libhv_static DEPENDS hv_static)
+    #add_custom_target(libhv_static DEPENDS hv_static)
 endif()
 
 if(WIN32 AND NOT MINGW)
