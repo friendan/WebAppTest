@@ -3,10 +3,10 @@ cmake_policy(SET CMP0077 NEW)
 
 project(hv VERSION 1.3.4)
 
-option(BUILD_SHARED "build shared library" ON)
+option(BUILD_SHARED "build shared library" OFF)
 option(BUILD_STATIC "build static library" ON)
 
-option(BUILD_EXAMPLES "build examples" ON)
+option(BUILD_EXAMPLES "build examples" OFF)
 option(BUILD_UNITTEST "build unittest" OFF)
 
 # see config.ini
@@ -33,7 +33,7 @@ option(WITH_KCP "compile event/kcp" OFF)
 if(WIN32 OR MINGW)
     option(WITH_WEPOLL "compile event/wepoll -> use iocp" ON)
     option(ENABLE_WINDUMP "Windows MiniDumpWriteDump" OFF)
-    option(BUILD_FOR_MT "build for /MT" OFF)
+    option(BUILD_FOR_MT "build for /MT" ON)
     if(BUILD_FOR_MT)
         set(CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG} /MTd")
         set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
@@ -267,18 +267,16 @@ if(BUILD_STATIC)
     target_include_directories(hv_static PRIVATE ${LIBHV_SRCDIRS}
         INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
     target_link_libraries(hv_static ${LIBS})
-    install(TARGETS hv_static
-        EXPORT libhvConfig
-        ARCHIVE DESTINATION lib)
+    #install(TARGETS hv_static EXPORT libhvConfig ARCHIVE DESTINATION lib)
     add_custom_target(libhv_static DEPENDS hv_static)
 endif()
 
 if(WIN32 AND NOT MINGW)
-    install(FILES $<TARGET_PDB_FILE:${PROJECT_NAME}> DESTINATION bin OPTIONAL)
+    #install(FILES $<TARGET_PDB_FILE:${PROJECT_NAME}> DESTINATION bin OPTIONAL)
 endif()
 
-install(FILES ${LIBHV_HEADERS} DESTINATION include/hv)
-install(EXPORT libhvConfig DESTINATION lib/cmake/libhv)
+#install(FILES ${LIBHV_HEADERS} DESTINATION include/hv)
+#install(EXPORT libhvConfig DESTINATION lib/cmake/libhv)
 
 if(BUILD_SHARED)
     set(HV_LIBRARIES hv CACHE INTERNAL "link hv libraries")
@@ -300,22 +298,22 @@ if(BUILD_UNITTEST)
 endif()
 
 # CPack settings
-set(CPACK_PACKAGE_NAME "libhv")
-set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
-set(CPACK_PACKAGE_RELEASE 1)
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A high-performance C/C++ network library")
-set(CPACK_PACKAGE_VENDOR "libhv")
-set(CPACK_PACKAGE_CONTACT "ithewei <ithewei@163.com>")
-set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CMAKE_HOST_SYSTEM_PROCESSOR}")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
-set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+#set(CPACK_PACKAGE_NAME "libhv")
+#set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
+#set(CPACK_PACKAGE_RELEASE 1)
+#set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A high-performance C/C++ network library")
+#set(CPACK_PACKAGE_VENDOR "libhv")
+#set(CPACK_PACKAGE_CONTACT "ithewei <ithewei@163.com>")
+#set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${CMAKE_HOST_SYSTEM_PROCESSOR}")
+#set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+#set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 
 # Specify the package generators
-set(CPACK_GENERATOR "TGZ;DEB;RPM")
+#set(CPACK_GENERATOR "TGZ;DEB;RPM")
 
 # Enable CPack debug output
-set(CPACK_PACKAGE_DEBUG True)
+#set(CPACK_PACKAGE_DEBUG True)
 
 # https://cmake.org/cmake/help/latest/variable/CPACK_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION.html
-set(CPACK_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION "ON")
-include(CPack)
+#set(CPACK_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION "ON")
+#include(CPack)
