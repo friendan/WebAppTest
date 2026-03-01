@@ -1,10 +1,53 @@
 #include <iostream>
+#include <hv/HttpServer.h>
+#include <hv/hthread.h>    // import hv_gettid
+#include <hv/hasync.h>     // import hv::async
+using namespace hv;
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
+    HttpService router;
+    router.Static("/", "./html");
 
-    std::cin.get();
+    router.GET("/ping", [](HttpRequest* req, HttpResponse* resp) {
+        return resp->String("pong");
+     });
+
+    // middleware
+    router.AllowCORS();
+    router.Use([](HttpRequest* req, HttpResponse* resp) {
+        resp->SetHeader("X-Request-tid", hv::to_string(hv_gettid()));
+        return HTTP_STATUS_NEXT;
+     });
+
+    HttpServer server;
+    server.service = &router;
+    server.port = 8080;
+
+    server.https_port = 8443;
+    hssl_ctx_opt_t param;
+    memset(&param, 0, sizeof(param));
+    param.crt_file = "cert/server.crt";
+    param.key_file = "cert/server.key";
+    param.endpoint = HSSL_SERVER;
+    if (server.newSslCtx(&param) != 0) {
+        fprintf(stderr, "new SSL_CTX failed!\n");
+        return -20;
+    }
+
+    // uncomment to test multi-processes
+   // server.setProcessNum(4);
+   // uncomment to test multi-threads
+   // server.setThreadNum(4);
+
+    server.start();
+
+    // press Enter to stop
+    while (getchar() != '\n');
+    hv::async::cleanup();
+
+    //std::cin.get();
     return 0;
 }
 
