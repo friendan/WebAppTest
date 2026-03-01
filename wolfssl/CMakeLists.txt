@@ -478,7 +478,7 @@ endif()
 # ALPN
 add_option(WOLFSSL_ALPN
     "Enable ALPN support (default: disabled)"
-    "no" "yes;no")
+    "yes" "yes;no")
 
 if(WOLFSSL_ALPN)
     list(APPEND WOLFSSL_DEFINITIONS "-DHAVE_ALPN" "-DHAVE_TLS_EXTENSIONS")
