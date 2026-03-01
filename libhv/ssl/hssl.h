@@ -6,6 +6,7 @@
 #include "hplatform.h"
 #if !defined(WITH_OPENSSL) &&   \
     !defined(WITH_GNUTLS)  &&   \
+    !defined(WITH_WOLFSSL) &&   \
     !defined(WITH_MBEDTLS)
 #ifdef OS_WIN
     #define WITH_WINTLS

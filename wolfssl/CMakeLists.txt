@@ -548,11 +548,11 @@ endif()
 
 add_option(WOLFSSL_OPENSSLEXTRA
     "Enable extra OpenSSL API, size+ (default: disabled)"
-    "no" "yes;no")
+    "yes" "yes;no")
 
 add_option(WOLFSSL_OPENSSLALL
     "Enable all OpenSSL API, size++ (default: disabled)"
-    "no" "yes;no")
+    "yes" "yes;no")
 
 add_option(WOLFSSL_ASIO
     "Enable asio support (default: disabled)"
