@@ -17,6 +17,8 @@ int main() {
         return resp->String("pong");
      });
 
+    router.Proxy("/baidu/", "https://www.baidu.com/");
+
     // middleware
     router.AllowCORS();
     router.Use([](HttpRequest* req, HttpResponse* resp) {
