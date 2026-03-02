@@ -439,7 +439,7 @@ endif()
 # QUIC
 add_option(WOLFSSL_QUIC
     "Enable QUIC support (default: disabled)"
-    "no" "yes;no")
+    "yes" "yes;no")
 
 if(WOLFSSL_QUIC)
     set(WOLFSSL_ALPN "yes")
@@ -534,7 +534,7 @@ endif()
 # Harden, enable Timing Resistance and Blinding by default
 add_option("WOLFSSL_HARDEN"
     "Enable Hardened build, Enables Timing Resistance and Blinding (default: enabled)"
-    "yes" "yes;no")
+    "no" "yes;no")
 
 if(WOLFSSL_HARDEN)
     list(APPEND WOLFSSL_DEFINITIONS "-DTFM_TIMING_RESISTANT" "-DECC_TIMING_RESISTANT")
@@ -1665,7 +1665,7 @@ set(WOLFSSL_SNI_HELP_STRING "Enable SNI (default: disabled)")
 add_option(WOLFSSL_SNI ${WOLFSSL_SNI_HELP_STRING} ${SNI_DEFAULT} "yes;no")
 
 set(WOLFSSL_TLSX_HELP_STRING "Enable all TLS Extensions (default: disabled)")
-add_option(WOLFSSL_TLSX ${WOLFSSL_TLSX_HELP_STRING} "no" "yes;no")
+add_option(WOLFSSL_TLSX ${WOLFSSL_TLSX_HELP_STRING} "yes" "yes;no")
 
 add_option(WOLFSSL_EX_DATA
     "Enable app data (default: disabled)"
@@ -1892,7 +1892,7 @@ endif()
 # fastmath
 add_option("WOLFSSL_FAST_MATH"
     "Enable fast math ops (default: disabled)"
-    "no" "yes;no")
+    "yes" "yes;no")
 
 if(WOLFSSL_FAST_MATH)
     # turn off fastmath if leanpsk on or asn off (w/o DH and ECC)
