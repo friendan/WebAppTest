@@ -1,0 +1,38 @@
+[req]
+prompt              = no
+default_bits        = 2048
+default_md          = sha256
+distinguished_name  = dn
+req_extensions      = req_ext  # 申请证书时的扩展（包含域名/IP）
+x509_extensions     = req_ext  # 最终证书的扩展（和上面保持一致）
+
+[dn]
+C                   = CN
+ST                  = Beijing
+L                   = Beijing
+O                   = MyServer
+OU                  = IT
+CN                  = www.localhost.com  # 主域名（可填任意一个核心域名）
+emailAddress        = admin@localhost.com
+
+[req_ext]
+# 1. 多个域名（DNS.1、DNS.2... 依次添加）
+subjectAltName      = @alt_names
+# 2. 服务器证书核心用途（HTTPS必备）
+keyUsage            = critical, digitalSignature, keyEncipherment
+extendedKeyUsage    = critical, serverAuth, clientAuth
+
+[alt_names]
+# ===== 重点：修改这里的域名和IP =====
+# 多个域名（DNS.1、DNS.2、DNS.3...）
+DNS.1   = www.localhost.com
+DNS.2   = localhost.com
+DNS.3   = localhost.com
+# 多个IP地址（IP.1、IP.2、IP.3...，低版本OpenSSL需用IP Address.1）
+IP.1    = 127.0.0.1
+IP.2    = 127.0.0.2
+IP.3    = 127.0.0.3
+
+
+
+

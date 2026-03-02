@@ -24,5 +24,9 @@ extendedKeyUsage    = critical, any  # 关键：any 代表所有扩展用途
 extendedKeyUsage = anyExtendedKeyUsage
 
 
+openssl genrsa -out server.key 2048
+openssl req -new -key server.key -out server.csr -config server.cnf
+openssl x509 -req -in server.csr -CA rootCA.crt -CAkey rootCA.key -CAcreateserial -out server.crt -days 3650 -sha256 -extensions req_ext -extfile server.cnf
+openssl x509 -in server.crt -noout -text
 
 
