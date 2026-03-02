@@ -4,6 +4,9 @@
 #include <hv/hasync.h>     // import hv::async
 using namespace hv;
 
+// http://127.0.0.1:8080/
+// https://127.0.0.1:8443/
+
 int main() {
     std::cout << "Hello, World!" << std::endl;
 
@@ -24,8 +27,8 @@ int main() {
     HttpServer server;
     server.service = &router;
     server.port = 8080;
-
     server.https_port = 8443;
+
     hssl_ctx_opt_t param;
     memset(&param, 0, sizeof(param));
     param.crt_file = "cert/server.crt";

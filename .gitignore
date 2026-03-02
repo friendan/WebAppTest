@@ -1,3 +1,7 @@
 /build
 /bin/Debug/*.pdb
-/bin/Debug
+
+/bin/Debug/wolfssl.lib
+/bin/Debug/*.log
+/bin/Debug/*.lib
+/bin/Debug/WebApp.exe
