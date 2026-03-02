@@ -1,0 +1,28 @@
+certmgr.msc
+
+# 生成不加密的私钥（方便使用，无密码），文件名为 rootCA.key
+openssl genrsa -out rootCA.key 2048
+
+# （可选）生成带密码的私钥（更安全，每次使用需输入密码）
+# openssl genrsa -des3 -out rootCA.key 2048
+
+# 读取配置文件生成自签名根证书（核心）
+openssl req -x509 -new -nodes -key rootCA.key -sha256 -days 36500 -out rootCA.crt -config rootCA.cnf
+
+#打印证书信息
+openssl x509 -in rootCA.crt -noout -subject
+
+
+
+# 关键：让证书支持 **所有目的**
+keyUsage            = critical, digitalSignature, cRLSign, keyCertSign, keyEncipherment, dataEncipherment, keyAgreement
+extendedKeyUsage    = critical, serverAuth, clientAuth, codeSigning, timeStamping, OCSPSigning, emailProtection, ipsecIke
+
+# 核心简化：一行搞定所有用途
+keyUsage            = critical, digitalSignature, cRLSign, keyCertSign, keyEncipherment, dataEncipherment
+extendedKeyUsage    = critical, any  # 关键：any 代表所有扩展用途
+extendedKeyUsage = anyExtendedKeyUsage
+
+
+
+

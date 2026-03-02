@@ -1,0 +1,29 @@
+[req]
+# 基本配置
+prompt              = no          # 关闭交互式提示，直接用配置文件的值
+default_bits        = 2048        # 私钥位数
+default_md          = sha256      # 哈希算法
+distinguished_name  = req_distinguished_name
+x509_extensions     = v3_ca       # 启用CA扩展（关键：标记这是根CA证书）
+
+[req_distinguished_name]
+# 证书主体信息（按需修改）
+C                   = CN          # 国家代码（中国=CN）
+ST                  = Beijing     # 省份
+L                   = Beijing     # 城市
+O                   = LocalHost   # 组织/公司名
+OU                  = IT 		  # 部门
+CN                  = LocalCA     # 根证书名称（核心）
+emailAddress        = local@ca.com # 邮箱
+
+[v3_ca]
+# CA证书专用扩展（必须配置，否则无法作为根CA签名其他证书）
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer
+basicConstraints = CA:true        # 标记为CA证书
+keyUsage = critical, digitalSignature, keyCertSign, cRLSign, keyEncipherment, dataEncipherment #核心必备 + 通用加密，满足「预期目的：所有」
+#extendedKeyUsage = critical, serverAuth, clientAuth, codeSigning, timeStamping, OCSPSigning, emailProtection, ipsecIke
+extendedKeyUsage = anyExtendedKeyUsage
+
+
+
