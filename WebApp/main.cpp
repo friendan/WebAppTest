@@ -2,6 +2,7 @@
 #include <hv/HttpServer.h>
 #include <hv/hthread.h>    // import hv_gettid
 #include <hv/hasync.h>     // import hv::async
+#include "router.h"
 using namespace hv;
 
 // http://127.0.0.1:8080/
@@ -11,20 +12,8 @@ int main() {
     std::cout << "Hello, World!" << std::endl;
 
     HttpService router;
-    router.Static("/", "./html");
-
-    router.GET("/ping", [](HttpRequest* req, HttpResponse* resp) {
-        return resp->String("pong");
-     });
-
-    router.Proxy("/baidu/", "https://www.baidu.com/");
-
-    // middleware
-    router.AllowCORS();
-    router.Use([](HttpRequest* req, HttpResponse* resp) {
-        resp->SetHeader("X-Request-tid", hv::to_string(hv_gettid()));
-        return HTTP_STATUS_NEXT;
-     });
+    Router::Register(router);
+    
 
     HttpServer server;
     server.service = &router;
