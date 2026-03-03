@@ -90,6 +90,7 @@ HV_EXPORT extern HttpCookie   NoCookie;
 
 class HV_EXPORT HttpMessage {
 public:
+    void* pHttpHandler;
     static char         s_date[32];
     int                 type;
     unsigned short      http_major;

@@ -1,6 +1,6 @@
 #include "HttpService.h"
 #include "HttpMiddleware.h"
-
+#include "HttpHandler.h"
 #include "hbase.h" // import hv_strendswith
 
 namespace hv {
@@ -204,6 +204,12 @@ bool HttpService::IsTrustProxy(const char* host) {
 
 void HttpService::AllowCORS() {
     Use(HttpMiddleware::CORS);
+}
+
+void HttpService::SendHttpResponse(void* pHttpHandler)
+{
+    HttpHandler* httpHandler = (HttpHandler*)pHttpHandler;
+    httpHandler->SendHttpResponse();
 }
 
 }

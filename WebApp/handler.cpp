@@ -7,6 +7,22 @@
 #include <hv/hstring.h>
 #include <hv/EventLoop.h> // import setTimeout, setInterval
 
+hv::HttpService* gHttpService = NULL;
+
+void Handler::HttpService(hv::HttpService& httpService)
+{
+    gHttpService = &httpService;
+}
+
+int Handler::mitmhandler(HttpRequest* req, HttpResponse* resp)
+{
+    // https://www.iqiyi.com/
+    //resp->File("html/index.html");
+    resp->String("mitm okk");
+    gHttpService->SendHttpResponse(req->pHttpHandler);
+    return HTTP_STATUS_OK;
+}
+
 int Handler::headerHandler(HttpRequest* req, HttpResponse* resp) {
     // printf("%s:%d\n", req->client_addr.ip.c_str(), req->client_addr.port);
 #if REDIRECT_HTTP_TO_HTTPS
@@ -28,10 +44,10 @@ int Handler::preprocessor(HttpRequest* req, HttpResponse* resp) {
     // printf("%s\n", req->Dump(true, true).c_str());
 
     // Deserialize request body to json, form, etc.
-    req->ParseBody();
+    // req->ParseBody();
 
     // Unified setting response Content-Type?
-    resp->content_type = APPLICATION_JSON;
+    // resp->content_type = APPLICATION_JSON;
 
     return HTTP_STATUS_NEXT;
 }

@@ -115,6 +115,7 @@ struct HV_EXPORT HttpService {
     // processor: pathHandlers -> staticHandler -> errorHandler
     http_handler        processor;
     http_handler        postprocessor;
+    http_handler        mitmhandler;
 
     /* API handlers */
     std::string         base_url;
@@ -214,6 +215,8 @@ struct HV_EXPORT HttpService {
         }
         return paths;
     }
+
+    void SendHttpResponse(void* pHttpHandler);
 
     // Handler = [ http_sync_handler, http_ctx_handler ]
     template<typename Handler>

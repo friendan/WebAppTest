@@ -4,6 +4,11 @@
 
 class Handler {
 public:
+    static void HttpService(hv::HttpService& httpService);
+
+    // mitmhandler
+    static int mitmhandler(HttpRequest* req, HttpResponse* resp);
+    
     // headerHandler => preprocessor => middleware -> handlers => postprocessor
     static int headerHandler(HttpRequest* req, HttpResponse* resp);
     static int preprocessor(HttpRequest* req, HttpResponse* resp);

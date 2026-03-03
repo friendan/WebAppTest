@@ -68,6 +68,8 @@ bool HttpHandler::Init(int http_version) {
     }
     req  = std::make_shared<HttpRequest>();
     resp = std::make_shared<HttpResponse>();
+    req->pHttpHandler = this;
+    resp->pHttpHandler = this;
     if(http_version == 1) {
         protocol = HTTP_V1;
     } else if (http_version == 2) {
@@ -324,6 +326,12 @@ void HttpHandler::onMessageComplete() {
 
     if (proxy) {
         if (proxy_connected) Reset();
+        return;
+    }
+
+    if (service->mitmhandler) {
+        status_code = customHttpHandler(service->mitmhandler);
+        Reset();
         return;
     }
 
