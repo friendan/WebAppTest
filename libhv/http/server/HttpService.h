@@ -216,8 +216,6 @@ struct HV_EXPORT HttpService {
         return paths;
     }
 
-    void SendHttpResponse(void* pHttpHandler);
-
     // Handler = [ http_sync_handler, http_ctx_handler ]
     template<typename Handler>
     void Use(Handler handlerFunc) {

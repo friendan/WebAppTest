@@ -19,7 +19,8 @@ int Handler::mitmhandler(HttpRequest* req, HttpResponse* resp)
     // https://www.iqiyi.com/
     //resp->File("html/index.html");
     resp->String("mitm okk");
-    gHttpService->SendHttpResponse(req->pHttpHandler);
+
+    
     return HTTP_STATUS_OK;
 }
 

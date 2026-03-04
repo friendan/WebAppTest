@@ -206,10 +206,4 @@ void HttpService::AllowCORS() {
     Use(HttpMiddleware::CORS);
 }
 
-void HttpService::SendHttpResponse(void* pHttpHandler)
-{
-    HttpHandler* httpHandler = (HttpHandler*)pHttpHandler;
-    httpHandler->SendHttpResponse();
-}
-
 }
