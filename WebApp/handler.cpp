@@ -6,6 +6,7 @@
 #include <hv/hfile.h>
 #include <hv/hstring.h>
 #include <hv/EventLoop.h> // import setTimeout, setInterval
+#include <hv/requests.h>
 
 hv::HttpService* gHttpService = NULL;
 
@@ -16,11 +17,48 @@ void Handler::HttpService(hv::HttpService& httpService)
 
 int Handler::mitmhandler(HttpRequest* req, HttpResponse* resp)
 {
+    std::cout << "url " << req->url << std::endl;
+    std::cout << "path " << req->path << std::endl;
+
     // https://www.iqiyi.com/
     //resp->File("html/index.html");
-    resp->String("mitm okk");
+    //resp->String("mitm okk");
 
-    
+    HttpRequestPtr httpReq = std::make_shared<HttpRequest>();
+    httpReq->method = req->method;
+    // httpReq->url = req->url;
+    httpReq->url = std::string("https://www.iqiyi.com") + req->path;
+    httpReq->scheme = req->scheme;
+
+    // httpReq->host = req->host;
+    // httpReq->port = req->port;
+    httpReq->path = req->path;
+    httpReq->host = "www.iqiyi.com";
+    httpReq->port = 80;
+    // httpReq->path = std::string("https://www.iqiyi.com/") + req->path;
+
+    httpReq->query_params = req->query_params;
+    httpReq->client_addr = req->client_addr;
+    httpReq->timeout = req->timeout;
+    httpReq->connect_timeout = req->connect_timeout;
+    httpReq->retry_count = req->retry_count;
+    httpReq->retry_delay = req->retry_delay;
+    // httpReq->redirect = req->redirect;
+    // httpReq->proxy = req->proxy;
+    // httpReq->cancel = req->cancel;
+
+    hio_t* io = req->io;
+    requests::async(httpReq, [io](const HttpResponsePtr& httpResp){
+        if(!httpResp){
+            std::cout << "httpResp is null " << std::endl;
+            return;
+        }
+        httpResp->DelHeader("Transfer-Encoding");
+        std::string data = httpResp->Dump(true, true);
+        hio_write(io, data.c_str(), data.length());
+    });
+
+
     return HTTP_STATUS_OK;
 }
 

@@ -36,7 +36,7 @@
 #include <string>
 #include <map>
 #include <functional>
-
+#include "hloop.h"
 #include "hexport.h"
 #include "hbase.h"
 #include "hstring.h"
@@ -90,7 +90,6 @@ HV_EXPORT extern HttpCookie   NoCookie;
 
 class HV_EXPORT HttpMessage {
 public:
-    void* pHttpHandler;
     static char         s_date[32];
     int                 type;
     unsigned short      http_major;
@@ -262,6 +261,7 @@ public:
 
     // headers
     void SetHeader(const char* key, const std::string& value);
+    void DelHeader(const char* key);
     std::string GetHeader(const char* key, const std::string& defvalue = hv::empty_string);
 
     // cookies
@@ -368,6 +368,7 @@ public:
 
 class HV_EXPORT HttpRequest : public HttpMessage {
 public:
+    hio_t* io;
     http_method         method;
     // scheme:[//[user[:password]@]host[:port]][/path][?query][#fragment]
     std::string         url;

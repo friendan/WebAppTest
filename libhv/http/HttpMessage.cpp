@@ -465,6 +465,9 @@ bool HttpMessage::IsUpgrade() {
 void HttpMessage::SetHeader(const char* key, const std::string& value) {
     headers[key] = value;
 }
+void HttpMessage::DelHeader(const char* key){
+    headers.erase(key);
+}
 std::string HttpMessage::GetHeader(const char* key, const std::string& defvalue) {
     auto iter = headers.find(key);
     return iter == headers.end() ? defvalue : iter->second;
