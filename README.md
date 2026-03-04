@@ -1,4 +1,15 @@
 # WebAppTest
+-A：指定平台架构，可选x64/Win32/ARM64等；
+并行编译（加速，-j后接CPU核心数，如8核
+
+#生成VS解决方案工程
+cmake -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Debug
+cmake -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release
+
+#编译VS解决方案
+cmake --build build --config Debug -j 8
+cmake --build build --config Release -j 8
+
 WebAppTest
 project(WebApp LANGUAGES CXX)
 
